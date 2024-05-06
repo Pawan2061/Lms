@@ -1,6 +1,8 @@
-import { Injectable } from '@nestjs/common';
+import { ForbiddenException, Injectable } from '@nestjs/common';
+import { JwtService } from '@nestjs/jwt';
 import * as bcrypt from "bcrypt";
 import { PrismaService } from 'src/prisma/prisma.service';
+import { LoginDto } from './dto/login.dto';
 import { SignupDto } from './dto/signup.dto';
 
 
@@ -8,6 +10,7 @@ import { SignupDto } from './dto/signup.dto';
 export class AuthService {
     constructor(
         private prisma:PrismaService,
+        private jwtService:JwtService
 
     ){}
     async signUp(dto:SignupDto):Promise<object>{
@@ -24,8 +27,10 @@ export class AuthService {
             })
             return {
                 message:{
-                    ...user,
-                    password:hash
+                   id:user.id,
+                   email:user.email,
+                   username:user.email
+                    
                 }
             }
         } catch (error) {
@@ -36,6 +41,44 @@ export class AuthService {
         
     }
 
+
+    async login(dto:LoginDto):Promise<Object>{
+
+
+        try {
+            const student=await this.prisma.user.findFirst({
+                where:{
+                    username:dto.username
+                }
+            })
+
+            if(!student){
+                throw new ForbiddenException('credentials incorrect')
+
+            }
+
+            const payload = { sub: student.id, username: student.username };
+    return {
+      access_token: await this.jwtService.signAsync(payload,{
+        expiresIn:'15m',
+        secret:process.env.SECRET_TOKEN
+      }),
+    };
+
+
+
+        
+             
+
+            
+        } catch (error) {
+            return error.message
+            
+        }
+
+    }
+
+   
 
     
 }
