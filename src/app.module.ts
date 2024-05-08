@@ -18,7 +18,8 @@ import { UserModule } from './user/user.module';
   imports: [PrismaModule, AuthModule, UserModule,MailModule,
   ConfigModule.forRoot({
     isGlobal:true
-  })
+  }),
+  
   ],
   controllers: [AppController],
   providers: [

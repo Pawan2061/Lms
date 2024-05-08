@@ -13,6 +13,7 @@ import { jwtConstants } from './constant';
   imports:[PrismaModule,
     PassportModule,
     MailModule,
+    
   JwtModule.register({
     global:true,
     secret:jwtConstants.secret,
