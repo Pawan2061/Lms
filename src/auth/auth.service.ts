@@ -1,6 +1,7 @@
 import { ForbiddenException, Injectable } from '@nestjs/common';
 import { JwtService } from '@nestjs/jwt';
 import * as bcrypt from "bcrypt";
+import { MailService } from 'src/mail/mail.service';
 import { PrismaService } from 'src/prisma/prisma.service';
 import { LoginDto } from './dto/login.dto';
 import { SignupDto } from './dto/signup.dto';
@@ -10,7 +11,8 @@ import { SignupDto } from './dto/signup.dto';
 export class AuthService {
     constructor(
         private prisma:PrismaService,
-        private jwtService:JwtService
+        private jwtService:JwtService,
+        private mailService:MailService
 
     ){}
     async signUp(dto:SignupDto):Promise<object>{
@@ -25,6 +27,8 @@ export class AuthService {
                     username:dto.username
                 }
             })
+            this.mailService.sendVerificationMail(user.email,user.id)
+            
             return {
                 message:{
                    id:user.id,
