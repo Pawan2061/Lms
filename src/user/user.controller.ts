@@ -1,5 +1,6 @@
-import { Controller, Get, Param, ParseIntPipe } from '@nestjs/common';
+import { Body, Controller, Get, Param, ParseIntPipe, Patch } from '@nestjs/common';
 import { Public } from 'src/common/public.decorator';
+import { UpdateUserDto } from './dto/updateUser.dto';
 import { UserService } from './user.service';
 
 @Controller('user')
@@ -15,7 +16,7 @@ export class UserController {
 
     
 
-        @Public()
+    @Public()
         
 
     @Get("/")
@@ -39,6 +40,15 @@ export class UserController {
         
 
         return this.userService.getUserById(id)
+
+    }
+
+
+
+    @Patch()
+    async updateEmail(@Body() updateDto:UpdateUserDto){
+
+        return this.userService.updateEmail(updateDto)
 
     }
 

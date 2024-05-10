@@ -5,6 +5,7 @@ import { MailModule } from 'src/mail/mail.module';
 import { PrismaModule } from 'src/prisma/prisma.module';
 import { AuthController } from './auth.controller';
 import { AuthService } from './auth.service';
+import { JwtStrategy } from './auth.strategy';
 import { jwtConstants } from './constant';
 
 
@@ -21,7 +22,7 @@ import { jwtConstants } from './constant';
    
   })],
   controllers: [AuthController],
-  providers: [AuthService],
+  providers: [AuthService,JwtStrategy],
   
 })
 export class AuthModule {}

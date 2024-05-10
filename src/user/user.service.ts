@@ -1,5 +1,6 @@
 import { Injectable } from '@nestjs/common';
 import { PrismaService } from 'src/prisma/prisma.service';
+import { UpdateUserDto } from './dto/updateUser.dto';
 
 @Injectable()
 export class UserService {
@@ -47,6 +48,41 @@ export class UserService {
             }
             
         }
+    }
+
+    async updateEmail(dto:UpdateUserDto):Promise<Object>{
+        try {
+
+            const User=await this.prisma.user.findFirst({
+                where:{
+                    username:dto.username
+
+                }
+            })
+
+
+
+             const newStudent=await this.prisma.user.update({
+                where:{
+                    username:dto.username
+                },
+                data:{
+                    email:dto.email
+                }
+            })
+            console.log("reached here");
+            
+
+            console.log(newStudent);
+            
+            return {
+                message:`${newStudent.email} is updated`
+            }
+        } catch (error) {
+            return error.message
+            
+        }
+
     }
 
 
