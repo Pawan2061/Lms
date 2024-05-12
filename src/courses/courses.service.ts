@@ -7,6 +7,24 @@ import { CreateCourseDto } from './dto/addCourse.dto';
 export class CoursesService {
     constructor(private readonly prisma:PrismaService){}
 
+    async createCourse(dto:CreateCourseDto):Promise<Object>{
+        console.log(dto);
+        
+
+        const newCourse=await  this.prisma.course.create({
+            data:{
+                description:dto.description,
+                id:dto.id,
+                name:dto.name
+
+            }
+        })
+
+        return {
+            newCourse:newCourse
+        }
+    }
+
 
     async addCourse(dto:CreateCourseDto,user:any):Promise<string>{
         console.log(user.userId);
