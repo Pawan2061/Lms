@@ -26,38 +26,33 @@ export class CoursesService {
     }
 
 
-    async addCourse(dto:CreateCourseDto,user:any):Promise<string>{
+    async addCourse(id:number,user:any):Promise<string>{
         console.log(user.userId);
-        
-        
 
+        const course=await this.prisma.course.update({
+            where:{
+                id:id
 
-        const Course=await this.prisma.course.create({
-           
-         
-                 
-            data:{
-                name:dto.name,
-                description:dto.description,
+            },data:{
                 students:{
-                   
                     connect:{
                         id:user.userId
                     }
-                    
-                    
-
-
-
-                    
-                    
-                 
                 }
-
             }
         })
 
-        return `${Course.name}is added`
+
+
+      
+
+        
+        
+
+
+       
+
+        return `${course.name} is added to the ${user.name}`
 
 
 

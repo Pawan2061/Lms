@@ -9,7 +9,7 @@ export class RolesGuard implements CanActivate {
 
   async canActivate(context: ExecutionContext): Promise<boolean> {
     const request=context.switchToHttp().getRequest()
-    console.log(request);
+    
     
     
     const userId=request.user.userId
@@ -19,7 +19,6 @@ export class RolesGuard implements CanActivate {
             id:userId
         }
     })
-    console.log("hey there");
     
     
     

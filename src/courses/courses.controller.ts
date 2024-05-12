@@ -1,4 +1,4 @@
-import { Body, Controller, Get, Post, UseGuards } from '@nestjs/common';
+import { Body, Controller, Get, Param, Patch, Post, UseGuards } from '@nestjs/common';
 import { User } from '@prisma/client';
 import { JwtAuthGuard } from 'src/auth/jwt.guard';
 import { Public } from 'src/common/public.decorator';
@@ -13,7 +13,7 @@ export class CoursesController {
 
 
 
-    @Post('/createCourse')
+    @Post('')
     @UseGuards(JwtAuthGuard,RolesGuard)
 
     createCourse(@Body() dto:CreateCourseDto){
@@ -23,7 +23,7 @@ export class CoursesController {
 
 
 
-    @Post('')
+    @Patch('/:id')
 
 
 
@@ -31,13 +31,13 @@ export class CoursesController {
 
     
 
-    addCourse(@Body() dto:CreateCourseDto,@CurrentUser() user:User ){
+    addCourse(@Param('id') id:string,@CurrentUser() user:User ){
         console.log(user);
         
         // console.log(user.id);
         
     
-        return this.courseService.addCourse(dto,user)
+        return this.courseService.addCourse(+id,user)
 
     }
     @Public()
