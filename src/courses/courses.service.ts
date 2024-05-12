@@ -36,9 +36,14 @@ export class CoursesService {
             },data:{
                 students:{
                     connect:{
-                        id:user.userId
+                        id:user.userId,
+
+                    
                     }
-                }
+                
+                },
+               
+                
             }
         })
 
@@ -111,6 +116,17 @@ export class CoursesService {
 
 
 
+
+    }
+
+    async deleteCourse(id:number):Promise<string>{
+        const course=await this.prisma.course.delete({
+            where:{
+                id:id
+
+            }
+        })
+        return `${course.name} is deleted`
 
     }
 }

@@ -1,4 +1,4 @@
-import { Body, Controller, Get, Param, Patch, Post, UseGuards } from '@nestjs/common';
+import { Body, Controller, Delete, Get, Param, ParseIntPipe, Patch, Post, UseGuards } from '@nestjs/common';
 import { User } from '@prisma/client';
 import { JwtAuthGuard } from 'src/auth/jwt.guard';
 import { Public } from 'src/common/public.decorator';
@@ -21,6 +21,13 @@ export class CoursesController {
 
     }
 
+    @Public()
+    @Get()
+    getCourses(){
+        
+        return this.courseService.getCourses()
+    }
+
 
 
     @Patch('/:id')
@@ -31,24 +38,24 @@ export class CoursesController {
 
     
 
-    addCourse(@Param('id') id:string,@CurrentUser() user:User ){
+    addCourse(@Param('id',ParseIntPipe) id:number,@CurrentUser() user:User ){
         console.log(user);
         
         // console.log(user.id);
         
     
-        return this.courseService.addCourse(+id,user)
+        return this.courseService.addCourse(id,user)
 
     }
-    @Public()
-    @Get()
-    getCourses(){
-        
-        return this.courseService.getCourses()
+    @UseGuards(JwtAuthGuard,RolesGuard)
+  
+
+    @Delete('/:id')
+    deleteCourse(@Param('id' ,ParseIntPipe) id:number){
+        return this.courseService.deleteCourse(id)
     }
+
+
 
 }
-// function CurrentUser(): (target: CoursesController, propertyKey: "addCourse", parameterIndex: 1) => void {
-//     throw new Error('Function not implemented.');
-// }
 

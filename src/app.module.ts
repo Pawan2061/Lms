@@ -8,6 +8,7 @@ import { JwtAuthGuard } from './auth/jwt.guard';
 import { CoursesModule } from './courses/courses.module';
 import { MailModule } from './mail/mail.module';
 import { PrismaModule } from './prisma/prisma.module';
+import { SubjectModule } from './subject/subject.module';
 import { UserModule } from './user/user.module';
 
 
@@ -17,11 +18,12 @@ import { UserModule } from './user/user.module';
 // use config module
 @Module({
   imports: [PrismaModule, AuthModule, UserModule,MailModule,
-    CoursesModule,
+    CoursesModule,SubjectModule,
   ConfigModule.forRoot({
     isGlobal:true
   }),
   CoursesModule,
+  SubjectModule,
   
   ],
   controllers: [AppController],
