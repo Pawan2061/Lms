@@ -21,7 +21,8 @@ model User{
   username String @unique
   email String @unique
   password   String
-  role       String?      @default("Student")
+  role       Role      @default(Student)
+
   courses Course[]
 
   
@@ -40,5 +41,12 @@ model Subject{
   title String 
   courseId Int
   course Course @relation(fields: [courseId],references: [id])
+
+}
+
+
+enum Role{
+  Student   
+  Admin
 
 }
