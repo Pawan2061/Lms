@@ -6,6 +6,7 @@ import { AppService } from './app.service';
 import { AuthModule } from './auth/auth.module';
 import { JwtAuthGuard } from './auth/jwt.guard';
 import { CoursesModule } from './courses/courses.module';
+import { FeedbackModule } from './feedback/feedback.module';
 import { MailModule } from './mail/mail.module';
 import { PrismaModule } from './prisma/prisma.module';
 import { SubjectModule } from './subject/subject.module';
@@ -24,6 +25,7 @@ import { UserModule } from './user/user.module';
   }),
   CoursesModule,
   SubjectModule,
+  FeedbackModule,
   
   ],
   controllers: [AppController],

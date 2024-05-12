@@ -1,11 +1,14 @@
 import { Injectable } from '@nestjs/common';
 import { error } from 'console';
+import { FeedbackDto } from 'src/feedback/dto/feedback.dto';
+import { FeedbackService } from 'src/feedback/feedback.service';
 import { PrismaService } from 'src/prisma/prisma.service';
 import { CreateCourseDto } from './dto/addCourse.dto';
 
 @Injectable()
 export class CoursesService {
-    constructor(private readonly prisma:PrismaService){}
+    constructor(private readonly prisma:PrismaService,
+        private readonly feedback:FeedbackService){}
 
     async createCourse(dto:CreateCourseDto):Promise<Object>{
         console.log(dto);
@@ -127,6 +130,15 @@ export class CoursesService {
             }
         })
         return `${course.name} is deleted`
+
+    }
+
+    async courseFeedback(dto:FeedbackDto,courseId:number,userId:number){
+        const review=await this.feedback.addReview(dto,courseId,userId)
+
+
+        return review
+        
 
     }
 }
