@@ -1,6 +1,9 @@
 import { Body, Controller, Delete, Get, Param, ParseIntPipe, Patch, Post, UseGuards } from '@nestjs/common';
 import { Public } from 'src/common/public.decorator';
+import { FeedbackDto } from 'src/feedback/dto/feedback.dto';
 import { RolesGuard } from 'src/guards/admin.guard';
+import { CurrentUser } from 'src/guards/user.guard';
+import { IUser } from 'src/interface/jwt_user';
 import { CreateSubjectDto } from './dto/createsubject.dto';
 import { UpdateSubjectDto } from './dto/updateSubject.dto';
 import { SubjectService } from './subject.service';
@@ -39,5 +42,23 @@ export class SubjectController {
     @Delete('/:id')
     deleteSubject(@Param('id',ParseIntPipe)id:number){
         return this.subjectService.deleteSubject(id)
+    }
+
+    @Post('/review/:id')
+
+    courseReview(@Body() dto:FeedbackDto,@CurrentUser() user:IUser,@Param('id',ParseIntPipe) id:number){
+
+        console.log(user.username);
+        
+       
+        
+        
+        
+
+        
+
+        return this.subjectService.courseFeedback(dto,id,user.id)
+        
+
     }
 }

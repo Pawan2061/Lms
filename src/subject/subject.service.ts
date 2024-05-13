@@ -1,11 +1,14 @@
 import { Injectable } from '@nestjs/common';
+import { FeedbackDto } from 'src/feedback/dto/feedback.dto';
+import { FeedbackService } from 'src/feedback/feedback.service';
 import { PrismaService } from 'src/prisma/prisma.service';
 import { CreateSubjectDto } from './dto/createsubject.dto';
 import { UpdateSubjectDto } from './dto/updateSubject.dto';
 
 @Injectable()
 export class SubjectService {
-    constructor(private prismaService:PrismaService){}
+    constructor(private prismaService:PrismaService,
+        private feedback:FeedbackService){}
 
     async createSubject(dto:CreateSubjectDto):Promise<Object>{
 
@@ -104,5 +107,14 @@ export class SubjectService {
             
         }
         
+    }
+
+       async courseFeedback(dto:FeedbackDto,courseId:number,userId:number){
+        const review=await this.feedback.addReview(dto,courseId,userId)
+
+
+        return review
+        
+
     }
 }
