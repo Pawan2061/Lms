@@ -17,8 +17,9 @@ rating:number
   @IsOptional()
 
   subjectId: number;
-  @IsNumber()
-  @IsOptional()
-  authorId: number;
+  
+  // @IsNumber()
+  // @IsOptional()
+  // authorId: number;
 
 }
