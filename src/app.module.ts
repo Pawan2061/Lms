@@ -11,6 +11,7 @@ import { MailModule } from './mail/mail.module';
 import { PrismaModule } from './prisma/prisma.module';
 import { SubjectModule } from './subject/subject.module';
 import { UserModule } from './user/user.module';
+import { StudyMaterialModule } from './study-material/study-material.module';
 
 
 
@@ -26,6 +27,7 @@ import { UserModule } from './user/user.module';
   CoursesModule,
   SubjectModule,
   FeedbackModule,
+  StudyMaterialModule,
   
   ],
   controllers: [AppController],

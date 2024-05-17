@@ -46,6 +46,8 @@ model Subject{
   courseId Int
   course Course @relation(fields: [courseId],references: [id])
   feedbacks Feedback[]
+  studyMaterial StudyMaterial[]
+  
 
 }
 
@@ -74,6 +76,16 @@ model Feedback{
 
 }
 
+model StudyMaterial{
+  id Int @id @default(autoincrement())
+  title String
+  fileUrl String
+  fileType String
+
+  subjectId Int
+  subject Subject @relation(fields: [subjectId],references: [id])
+
+}
 
 enum Role{
   Student   
