@@ -14,7 +14,7 @@ export class MinioService {
     constructor(private readonly configService:ConfigService){
         this.accessKey=configService.getOrThrow('ACCESS_KEY')
         this.secretKey=configService.getOrThrow('SECRET_KEY')
-        this.port=configService.getOrThrow('PORT')
+        this.port=parseInt(configService.getOrThrow('PORT'))
         this.endpoint=configService.getOrThrow('END_POINT')
         this.minioClient=new Minio.Client({
             endPoint:this.endpoint,
@@ -25,17 +25,28 @@ export class MinioService {
         })
     }
 
-    async uploadFile(file:Buffer,key:string){
-        try {
-           
-        } catch (error) {
-            
-        }
+   async UploadFile(file: Buffer, key: string) {
+    try {
+       this.minioClient.putObject(
+        this.configService.getOrThrow('BUCKET'),
+        key,
+        file,
+        
+     
+        
+       
+        
+        
+      );
+      
+    } catch (e) {
+      return e.message;
     }
+  }
 
       async GetfileUrl(key: string) {
-    return `https://localhost:9001/${this.configService.get(
-      'BUCKET_NAME',
+    return `http://localhost:9000/${this.configService.get(
+      'BUCKET',
     )}/${key}`;
   }
 

@@ -9,14 +9,36 @@ export class StudyMaterialService {
     constructor(private readonly minioService:MinioService,
         private prismaService:PrismaService)
     {}
-    async createStudyMaterial(file:Express.Multer.File,
-        dto:CreateMaterialDto){
+    async createStudyMaterial( dto:CreateMaterialDto,file:Express.Multer.File
+       ){
             const file_key=randomUUID()
+            console.log(dto);
+            
             console.log(file);
             
 
             const fileUrl=await this.minioService.GetfileUrl(file_key)
             console.log(fileUrl);
+
+            await this.minioService.UploadFile(file.buffer,file_key)
+            return await this.prismaService.studyMaterial.create({
+                data:{
+                    id:dto.id,
+
+                    fileUrl:fileUrl,
+                    
+                    title:dto.title,
+                    
+
+                    subjectId:+dto.subjectId,
+
+                    fileType:file.mimetype
+                    
+                
+                    
+                }
+            })
+            
             
 
 
