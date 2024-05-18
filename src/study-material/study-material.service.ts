@@ -43,6 +43,53 @@ export class StudyMaterialService {
 
 
     }
+    async getStudyMaterials():Promise<Object>{
+
+        try {
+            const materials=await this.prismaService.studyMaterial.findMany()
+            if(!materials){
+                return {
+                    message:"there are no material"
+
+                }
+            }
+            return {
+                studymaterials:materials
+            }
+            
+        } catch (error) {
+            return {
+                error:error.message
+            }
+            
+        }
+    }
+     async getStudyMaterial(id:number):Promise<Object>{
+
+        try {
+            const material=await this.prismaService.studyMaterial.findUnique({
+                where:{
+                    id:id
+
+                }
+            })
+            if(!material){
+                return {
+                    message:"there are no material"
+
+                }
+            }
+            return {
+                studymaterial:material
+            }
+            
+        } catch (error) {
+            return {
+                error:error.message
+            }
+            
+        }
+    }
     
 
     
