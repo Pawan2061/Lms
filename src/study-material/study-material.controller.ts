@@ -1,10 +1,12 @@
-import { Controller, Post, UploadedFile, UseInterceptors } from "@nestjs/common";
+import { Controller, FileTypeValidator, MaxFileSizeValidator, ParseFilePipe, Post, UploadedFile, UseInterceptors } from "@nestjs/common";
 import { FileInterceptor } from "@nestjs/platform-express";
 @Controller('upload')
 export class uploadController{
     @Post()
     @UseInterceptors(FileInterceptor('file'))
-    uploadFile(@UploadedFile() file:Express.Multer.File){
+    uploadFile(@UploadedFile( new ParseFilePipe({
+        validators:[new MaxFileSizeValidator({maxSize:1000}) ,new FileTypeValidator({fileType:'image/jpeg'})]
+    })) file:Express.Multer.File){
 
         console.log(file);
         
