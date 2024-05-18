@@ -8,10 +8,11 @@ import { JwtAuthGuard } from './auth/jwt.guard';
 import { CoursesModule } from './courses/courses.module';
 import { FeedbackModule } from './feedback/feedback.module';
 import { MailModule } from './mail/mail.module';
+import { MinioModule } from './minio/minio.module';
 import { PrismaModule } from './prisma/prisma.module';
+import { StudyMaterialModule } from './study-material/study-material.module';
 import { SubjectModule } from './subject/subject.module';
 import { UserModule } from './user/user.module';
-import { StudyMaterialModule } from './study-material/study-material.module';
 
 
 
@@ -28,6 +29,7 @@ import { StudyMaterialModule } from './study-material/study-material.module';
   SubjectModule,
   FeedbackModule,
   StudyMaterialModule,
+  MinioModule,
   
   ],
   controllers: [AppController],

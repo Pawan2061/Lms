@@ -3,7 +3,7 @@ services:
   minio:
     image: quay.io/minio/minio
     volumes:
-      - ./data:/data
+      -  ./data:/data
     ports:
       - 9000:9000
       - 9001:9001
@@ -13,3 +13,4 @@ services:
       MINIO_ADDRESS: ':9000'
       MINIO_CONSOLE_ADDRESS: ':9001'
     command: minio server /data
+    
